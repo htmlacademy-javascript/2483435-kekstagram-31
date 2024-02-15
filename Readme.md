@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Богдан Троценко](https://up.htmlacademy.ru/javascript/31/user/2483435).
-* Наставник: `Arthur Litovko`.
+* Наставник: [Arthur Litovko](https://htmlacademy.ru/profile/id6927).
 
 ---
 
