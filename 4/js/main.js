@@ -33,10 +33,10 @@ const getRandomInteger = (min,max) => {
 
 const getRandomElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-const getValueProperty = (min, max, uniqueness = 0) => {
+const createIdGenerator = (min, max, uniqueness = false) => {
   const storage = [];
 
-  return function() {
+  return () => {
     let randomValue = getRandomInteger(min, max);
 
     if (uniqueness){
@@ -48,11 +48,6 @@ const getValueProperty = (min, max, uniqueness = 0) => {
     return randomValue;
   };
 };
-
-const id = getValueProperty(1,25, true);
-const url = getValueProperty(1,25, true);
-const description = getValueProperty(1,25);
-const idComments = getValueProperty(1,1000, true);
 
 const generateMessage = (value, storageMessage) => {
   const message = [];
@@ -66,12 +61,19 @@ const generateMessage = (value, storageMessage) => {
   return message.join(' ');
 };
 
+const GENERATION_PARAMETERS = {
+  getId : createIdGenerator(1,25, true),
+  getUrl : createIdGenerator(1,25, true),
+  getDescription : createIdGenerator(1,25),
+  getCommentId : createIdGenerator(1,1000, true)
+};
+
 const generateComments = (value) => {
   const comments = [];
   for (let i = 0; i < value; i ++) {
     comments.push({
-      id: idComments(),
-      avatar: String(`img/avatar-${getRandomInteger(1,6)}.svg`),
+      id: GENERATION_PARAMETERS.getCommentId(),
+      avatar: `img/avatar-${getRandomInteger(1,6)}.svg`,
       message: generateMessage (Math.ceil(Math.random() * 2), COMMENT_MESSAGES),
       name: getRandomElement(USER_NAMES)
     });
@@ -80,11 +82,11 @@ const generateComments = (value) => {
 };
 
 const createDescriptionImage = () => ({
-  id: id(),
-  url: `photos/${url()}.jpg`,
-  description: PHOTO_DESCRIPTIONS[description()],
+  id: GENERATION_PARAMETERS.getId(),
+  url: `photos/${GENERATION_PARAMETERS.getUrl()}.jpg`,
+  description: PHOTO_DESCRIPTIONS[GENERATION_PARAMETERS.getDescription()],
   likes: getRandomInteger(15,200),
-  comments: generateComments(Math.floor(Math.random() * 31))
+  comments: generateComments(getRandomInteger(0,30))
 });
 
 
