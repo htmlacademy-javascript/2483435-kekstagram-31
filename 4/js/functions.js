@@ -3,8 +3,8 @@ const checkLength = (string, length) => string.length <= length;
 
 //2
 const checkPalindrome = (string) => {
-  const formattedString = string.replaceAll(" ", "").toLowerCase();
-  let reverseString = "";
+  const formattedString = string.replaceAll(' ', '').toLowerCase();
+  let reverseString = '';
   for (let i = formattedString.length - 1; i >= 0; i--) {
     reverseString += formattedString.at(i);
   }
@@ -14,12 +14,12 @@ const checkPalindrome = (string) => {
 //3
 const convertToNumber = (string) => {
   string = string.toString();
-  let finalNumber = "";
+  let finalNumber = '';
 
   for (let i = 0; i <= string.length; i++) {
     const char = string.at(i);
 
-    if (parseInt(char, 10) || (char === "0" && finalNumber.length !== 0)) {
+    if (parseInt(char, 10) || (char === '0' && finalNumber.length !== 0)) {
       finalNumber += string.at(i);
     }
   }
@@ -27,6 +27,6 @@ const convertToNumber = (string) => {
   return finalNumber.length > 0 ? finalNumber : NaN;
 };
 
-checkLength("abc", 2);
-checkPalindrome("bob");
-convertToNumber("1b");
+checkLength('abc', 2);
+checkPalindrome('bob');
+convertToNumber('1b');
