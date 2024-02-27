@@ -62,9 +62,9 @@ const generateMessage = (value, storageMessage) => {
 };
 
 const GENERATION_PARAMETERS = {
-  id : createIdGenerator(1,25, true),
-  url : createIdGenerator(1,25, true),
-  description : createIdGenerator(1,25),
+  getId : createIdGenerator(1,25, true),
+  getUrl : createIdGenerator(1,25, true),
+  getDescription : createIdGenerator(1,25),
   getCommentId : createIdGenerator(1,1000, true)
 };
 
@@ -82,9 +82,9 @@ const generateComments = (value) => {
 };
 
 const createDescriptionImage = () => ({
-  id: GENERATION_PARAMETERS.getCommentId(),
-  url: `photos/${GENERATION_PARAMETERS.url()}.jpg`,
-  description: PHOTO_DESCRIPTIONS[GENERATION_PARAMETERS.description()],
+  id: GENERATION_PARAMETERS.getId(),
+  url: `photos/${GENERATION_PARAMETERS.getUrl()}.jpg`,
+  description: PHOTO_DESCRIPTIONS[GENERATION_PARAMETERS.getDescription()],
   likes: getRandomInteger(15,200),
   comments: generateComments(getRandomInteger(0,30))
 });
