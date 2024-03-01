@@ -1,32 +1,41 @@
-// //1
-// const checkLength = (string, length) => string.length <= length;
+/**
+ * module2-task1-1
+ */
+const checkLength = (string, length) => string.length <= length;
 
-// //2
-// const checkPalindrome = (string) => {
-//   const formattedString = string.replaceAll(' ', '').toLowerCase();
-//   let reverseString = '';
-//   for (let i = formattedString.length - 1; i >= 0; i--) {
-//     reverseString += formattedString.at(i);
-//   }
-//   return formattedString === reverseString;
-// };
+/**
+ * module2-task1-2
+ */
+const checkPalindrome = (string) => {
+  const formattedString = string.replaceAll(' ', '').toLowerCase();
+  let reverseString = '';
+  for (let i = formattedString.length - 1; i >= 0; i--) {
+    reverseString += formattedString.at(i);
+  }
+  return formattedString === reverseString;
+};
 
-// //3
-// const convertToNumber = (string) => {
-//   string = string.toString();
-//   let finalNumber = '';
+/**
+ * module2-task1-3
+ */
+const convertToNumber = (string) => {
+  string = string.toString();
+  let finalNumber = '';
 
-//   for (let i = 0; i <= string.length; i++) {
-//     const char = string.at(i);
+  for (let i = 0; i <= string.length; i++) {
+    const char = string.at(i);
 
-//     if (parseInt(char, 10) || (char === '0' && finalNumber.length !== 0)) {
-//       finalNumber += string.at(i);
-//     }
-//   }
+    if (parseInt(char, 10) || (char === '0' && finalNumber.length !== 0)) {
+      finalNumber += string.at(i);
+    }
+  }
 
-//   return finalNumber.length > 0 ? finalNumber : NaN;
-// };
+  return finalNumber.length > 0 ? finalNumber : NaN;
+};
 
+/**
+ * module5-task2
+ */
 const checkMeetingDuration = (workStart, workEnd, meetStart, duration) => {
   duration = `0:${duration}`;
 
@@ -39,7 +48,9 @@ const checkMeetingDuration = (workStart, workEnd, meetStart, duration) => {
 
   const meetingTime = timeInMinutes[2] + timeInMinutes[3];
 
-  return timeInMinutes[0] <= timeInMinutes[2] && meetingTime <= timeInMinutes[1];
+  return (
+    timeInMinutes[0] <= timeInMinutes[2] && meetingTime <= timeInMinutes[1]
+  );
 };
 
-export { checkMeetingDuration };
+export { checkLength, checkPalindrome, convertToNumber, checkMeetingDuration };
