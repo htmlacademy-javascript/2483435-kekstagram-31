@@ -1,12 +1,13 @@
 import { createDescriptionImages } from './data.js';
 
+const createThumbnails = createDescriptionImages();
 const container = document.querySelector('.pictures');
 const template = document
   .querySelector('#picture')
   .content.querySelector('.picture');
 const newFragment = document.createDocumentFragment();
 
-createDescriptionImages.forEach(({ id, url, description, likes, comments }) => {
+createThumbnails.forEach(({ id, url, description, likes, comments }) => {
   const thumbnail = template.cloneNode(true);
   thumbnail.href = `/photos/${id}.jpg`;
   thumbnail.querySelector('.picture__img').src = url;
