@@ -44,13 +44,6 @@ const blockScrolling = () => {
   document.body.classList.toggle('modal-open');
 };
 
-const closeModal = () => {
-  bigPhotoModal.classList.add('hidden');
-  hideBlocks();
-  blockScrolling();
-  document.removeEventListener('keydown', onDocumentKeyDown);
-};
-
 const onDocumentKeyDown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -58,12 +51,19 @@ const onDocumentKeyDown = (evt) => {
   }
 };
 
-const openModal = (targetThumbnail) => {
+function closeModal() {
+  bigPhotoModal.classList.add('hidden');
+  hideBlocks();
+  blockScrolling();
+  document.removeEventListener('keydown', onDocumentKeyDown);
+}
+
+function openModal(targetThumbnail) {
   renderBigPhoto(targetThumbnail);
   hideBlocks();
   blockScrolling();
   closeModalButton.addEventListener('click', () => closeModal());
   document.addEventListener('keydown', onDocumentKeyDown);
-};
+}
 
 export { openModal };
