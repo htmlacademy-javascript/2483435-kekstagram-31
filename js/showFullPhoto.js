@@ -35,11 +35,6 @@ const renderBigPhoto = (targetThumbnail) => {
   showBigPhotoComments(targetThumbnail.comments);
 };
 
-const hideBlocks = () => {
-  commentsCount.classList.toggle('hidden');
-  commentsLoader.classList.toggle('hidden');
-};
-
 const blockScrolling = () => {
   document.body.classList.toggle('modal-open');
 };
@@ -53,14 +48,12 @@ const onDocumentKeyDown = (evt) => {
 
 function closeModal() {
   bigPhotoModal.classList.add('hidden');
-  hideBlocks();
   blockScrolling();
   document.removeEventListener('keydown', onDocumentKeyDown);
 }
 
 function openModal(targetThumbnail) {
   renderBigPhoto(targetThumbnail);
-  hideBlocks();
   blockScrolling();
   closeModalButton.addEventListener('click', closeModal);
   document.addEventListener('keydown', onDocumentKeyDown);
