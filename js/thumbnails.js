@@ -1,14 +1,14 @@
 import { createDescriptionImages } from './data.js';
 import { openModal } from './showFullPhoto.js';
 
-const createdThumbnails = createDescriptionImages();
+const createdPhotos = createDescriptionImages();
 const container = document.querySelector('.pictures');
 const template = document
   .querySelector('#picture')
   .content.querySelector('.picture');
 const newFragment = document.createDocumentFragment();
 
-createdThumbnails.forEach((item) => {
+createdPhotos.forEach((item) => {
   const thumbnail = template.cloneNode(true);
   thumbnail.href = `/photos/${item.id}.jpg`;
   thumbnail.querySelector('.picture__img').src = item.url;
