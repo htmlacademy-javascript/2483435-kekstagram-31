@@ -8,9 +8,9 @@ const commentsLoader = document.querySelector('.comments-loader');
 const closeModalButton = document.querySelector('.big-picture__cancel');
 
 const showBigPhoto = ({ url, likes, comments, description }) => {
-  bigPhotoModal.querySelector('.big-picture__img').firstElementChild.src = url;
+  bigPhotoModal.querySelector('.big-picture__img img').src = url;
   bigPhotoModal.querySelector('.likes-count').textContent = likes;
-  bigPhotoModal.querySelector('.social__comment-shown-count').textContent = '';
+  bigPhotoModal.querySelector('.social__comment-shown-count').textContent = comments.length;
   bigPhotoModal.querySelector('.social__comment-total-count').textContent =
     comments.length;
   bigPhotoModal.querySelector('.social__caption').textContent = description;
