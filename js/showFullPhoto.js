@@ -62,7 +62,7 @@ function openModal(targetThumbnail) {
   renderBigPhoto(targetThumbnail);
   hideBlocks();
   blockScrolling();
-  closeModalButton.addEventListener('click', () => closeModal());
+  closeModalButton.addEventListener('click', closeModal);
   document.addEventListener('keydown', onDocumentKeyDown);
 }
 
