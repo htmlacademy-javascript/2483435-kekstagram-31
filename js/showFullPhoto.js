@@ -20,7 +20,6 @@ const showBigPhoto = ({ url, likes, comments, description }) => {
   bigPhotoModal.querySelector('.social__caption').textContent = description;
 };
 
-
 const showBigPhotoComments = (comments) => {
   commentsList.innerHTML = '';
   comments.forEach((item, index) => {
@@ -35,38 +34,36 @@ const showBigPhotoComments = (comments) => {
     }
     commentsList.append(currentComment);
   });
-  toShowComments(countShownComments);
+  toShowComments();
 };
 
-function toShowComments(countShownComments) {
-
+function toShowComments() {
   if (commentsList.children.length <= 5) {
     commentsLoader.classList.add('hidden');
   }
 
-  const toRenderComments = () => {
-    if (+countShownComments.textContent > commentsList.children.length) {
-      countShownComments.textContent = commentsList.children.length;
-      commentsLoader.classList.add('hidden');
-    }
-    for (let i = 0; i < commentsList.children.length; i++) {
-      if (i < countShownComments.textContent) {
-        commentsList.children[i].classList.remove('hidden');
-      }
-    }
+  if (+countShownComments.textContent > commentsList.children.length) {
+    countShownComments.textContent = commentsList.children.length;
+    commentsLoader.classList.add('hidden');
+  }
 
-    if (+countShownComments.textContent >= commentsList.children.length) {
-      countShownComments.textContent = commentsList.children.length;
-      commentsLoader.classList.add('hidden');
+  for (let i = 0; i < commentsList.children.length; i++) {
+    if (i < countShownComments.textContent) {
+      commentsList.children[i].classList.remove('hidden');
     }
-  };
+  }
 
-  commentsLoader.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    countShownComments.textContent = +countShownComments.textContent + +5;
-    toRenderComments();
-  });
+  if (+countShownComments.textContent >= commentsList.children.length) {
+    countShownComments.textContent = commentsList.children.length;
+    commentsLoader.classList.add('hidden');
+  }
 }
+
+commentsLoader.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  countShownComments.textContent = +countShownComments.textContent + +5;
+  toShowComments();
+});
 
 const renderBigPhoto = (targetThumbnail) => {
   bigPhotoModal.classList.remove('hidden');
