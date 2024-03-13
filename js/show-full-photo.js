@@ -65,10 +65,10 @@ commentsLoader.addEventListener('click', (evt) => {
   toShowComments();
 });
 
-const renderBigPhoto = (targetThumbnail) => {
+const renderBigPhoto = (photo) => {
   bigPhotoModal.classList.remove('hidden');
-  showBigPhoto(targetThumbnail);
-  showBigPhotoComments(targetThumbnail.comments);
+  showBigPhoto(photo);
+  showBigPhotoComments(photo.comments);
 };
 
 const blockScrolling = () => {

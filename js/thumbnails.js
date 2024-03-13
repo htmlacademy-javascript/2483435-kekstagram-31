@@ -1,4 +1,5 @@
-// import { openModal } from './showFullPhoto.js';
+import { openModal } from './show-full-photo.js';
+import { getPhotoById } from './photo-state.js';
 
 const template = document
   .querySelector('#picture')
@@ -12,6 +13,8 @@ const createThumbnail = (photo) => {
   image.src = photo.url;
   image.alt = photo.description;
 
+  thumbnail.href = `${photo.id}`;
+  thumbnail.dataset.id = photo.id;
   thumbnail.querySelector('.picture__likes').textContent = photo.likes;
   thumbnail.querySelector('.picture__comments').textContent =
     photo.comments.length;
@@ -19,5 +22,15 @@ const createThumbnail = (photo) => {
   return thumbnail;
 };
 
-export const renderThumbnails = (photos) =>
-  container.append(...photos.map(createThumbnail));
+
+const renderThumbnails = (photos) => container.append(...photos.map(createThumbnail));
+
+container.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  const thumbnail = evt.target.closest('.picture');
+  const id = Number(thumbnail.dataset.id);
+  const photo = getPhotoById(id);
+  openModal(photo);
+});
+
+export { renderThumbnails };
