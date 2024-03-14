@@ -1,16 +1,13 @@
-const PACK_SIZE = 5;
-
-const shownCountComments = document.querySelector(
-  '.social__comment-shown-count'
-);
-const totalCountComments = document.querySelector(
-  '.social__comment-total-count'
-);
+const shownCountComments = document.querySelector('.social__comment-shown-count');
+const totalCountComments = document.querySelector('.social__comment-total-count');
 const commentsList = document.querySelector('.social__comments');
 const commentsListItem = commentsList.querySelector('.social__comment');
 const commentsLoaderButton = document.querySelector('.comments-loader');
 
-let shownComments = 0;
+const PACK_SIZE = 5;
+
+let currentComments = [];
+
 
 const createComment = (comment) => {
   const item = commentsListItem.cloneNode(true);
@@ -23,30 +20,28 @@ const createComment = (comment) => {
   return item;
 };
 
+const onCommentsLoaderButtonClick = () => {
+  const shownComments = commentsList.childElementCount;
+  let endOfSlice = shownComments + PACK_SIZE;
 
+  const isAllCommentsShown = endOfSlice >= currentComments.length;
+  endOfSlice = isAllCommentsShown ? currentComments.length : endOfSlice;
+
+  const commentsSlice = currentComments.slice(shownComments, endOfSlice);
+
+  commentsList.append(...commentsSlice.map(createComment));
+
+  shownCountComments.textContent = endOfSlice;
+
+  commentsLoaderButton.classList.toggle('hidden', isAllCommentsShown);
+};
+
+commentsLoaderButton.addEventListener('click', onCommentsLoaderButtonClick);
 
 export const renderComments = (comments) => {
   commentsList.innerHTML = '';
-
   totalCountComments.textContent = comments.length;
-
-  commentsLoaderButton.addEventListener('click', () => {
-
-    let endOfSlice = shownComments + PACK_SIZE;
-    const isAllCommentsShown = endOfSlice >= comments.length;
-    endOfSlice = isAllCommentsShown ? comments.length : endOfSlice;
-
-    const commentsSlice = comments.slice(shownComments, endOfSlice);
-
-    commentsList.append(...commentsSlice.map(createComment));
-
-    shownCountComments.textContent = endOfSlice;
-
-    shownComments = commentsSlice.length;
-
-    commentsLoaderButton.classList.toggle('hidden', isAllCommentsShown);
-
-  });
+  currentComments = comments;
 
   commentsLoaderButton.click();
 };

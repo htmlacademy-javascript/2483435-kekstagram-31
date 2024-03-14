@@ -112,6 +112,6 @@ const mockedPhoto = () => {
   };
 };
 
-const mockedPhotos = Array.from({ length: AMOUNT_PHOTOS }, mockedPhoto);
+const mockedPhotos = () => Array.from({ length: AMOUNT_PHOTOS }, mockedPhoto);
 
 export { mockedPhotos };

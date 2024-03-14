@@ -1,4 +1,4 @@
-import { openModal } from './show-full-photo.js';
+import { openModal } from './show-modal.js';
 import { getPhotoById } from './photo-state.js';
 
 const template = document
