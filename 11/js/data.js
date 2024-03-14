@@ -4,6 +4,34 @@ import {
   createIdGenerator,
 } from './util.js';
 
+const AMOUNT_PHOTOS = 25;
+
+const RangeIdOfPhotos = {
+  MIN: 1,
+  MAX: 25
+};
+
+const RangeIdOfComments = {
+  MIN: 1,
+  MAX: 1000
+};
+
+const RangeNumberOfAvatar = {
+  MIN: 1,
+  MAX: 6
+};
+
+const RangeNumberOfLikes = {
+  MIN: 15,
+  MAX: 200
+};
+
+const RangeNumberOfComments = {
+  MIN: 0,
+  MAX: 30
+};
+
+
 const PHOTO_DESCRIPTIONS = [
   'поле',
   'табличка',
@@ -54,8 +82,9 @@ const USER_NAMES = [
   'Леопольд',
 ];
 
-const getPhotoId = createIdGenerator(1, 25, true);
-const getCommentId = createIdGenerator(1, 1_000, true);
+
+const getPhotoId = createIdGenerator(RangeIdOfPhotos.MIN, RangeIdOfPhotos.MAX, true);
+const getCommentId = createIdGenerator(RangeIdOfComments.MIN, RangeIdOfComments.MAX, true);
 
 const generateDescription = () => getRandomElement(PHOTO_DESCRIPTIONS);
 
@@ -66,24 +95,23 @@ const generateMessage = () =>
 
 const generateComments = () => ({
   id: getCommentId(),
-  avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
+  avatar: `img/avatar-${getRandomInteger(RangeNumberOfAvatar.MIN, RangeNumberOfAvatar.MAX)}.svg`,
   message: generateMessage(),
   name: getRandomElement(USER_NAMES),
 });
 
-const createDescriptionImage = () => {
+const mockedPhoto = () => {
   const id = getPhotoId();
 
   return {
     id,
     url: `photos/${id}.jpg`,
     description: generateDescription(),
-    likes: getRandomInteger(15, 200),
-    comments: Array.from({ length: getRandomInteger(0, 30) }, generateComments),
+    likes: getRandomInteger(RangeNumberOfLikes.MIN, RangeNumberOfLikes.MAX),
+    comments: Array.from({ length: getRandomInteger(RangeNumberOfComments.MIN, RangeNumberOfComments.MAX) }, generateComments),
   };
 };
 
-const createDescriptionImages = () =>
-  Array.from({ length: 25 }, createDescriptionImage);
+const mockedPhotos = () => Array.from({ length: AMOUNT_PHOTOS }, mockedPhoto);
 
-export { createDescriptionImages };
+export { mockedPhotos };
