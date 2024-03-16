@@ -1,12 +1,26 @@
-import { showModal } from '../utils/modal-windows.js';
+import { isEscapeKey, toggleModalClasses } from '../utils/modal-windows.js';
 import './photo-editing.js';
 
-const editingModal = document.querySelector('.img-upload__overlay');
-const loadingForm = document.querySelector('.img-upload__input');
-const closeModalButton = document.querySelector('.img-upload__cancel');
+const form = document.querySelector('.img-upload__form');
+const filename = form.filename;
+const editingModal = form.querySelector('.img-upload__overlay');
 
-loadingForm.addEventListener('change', (evt) => {
+const closeModal = () => form.reset();
+
+const onDocumentEscape = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeModal();
+  }
+};
+
+filename.addEventListener('change', (evt) => {
   evt.preventDefault();
-  showModal(editingModal, closeModalButton);
+  toggleModalClasses(editingModal, true);
+  document.addEventListener('keydown', onDocumentEscape);
 });
 
+form.addEventListener('reset', () => {
+  toggleModalClasses(editingModal, false);
+  document.removeEventListener('keydown', onDocumentEscape);
+});

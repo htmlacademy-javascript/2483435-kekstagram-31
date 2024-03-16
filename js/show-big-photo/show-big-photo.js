@@ -1,4 +1,4 @@
-import { showModal } from '../utils/modal-windows.js';
+import { isEscapeKey, toggleModalClasses } from '../utils/modal-windows.js';
 import { renderComments } from './comments.js';
 
 const bigPhotoModal = document.querySelector('.big-picture');
@@ -10,10 +10,31 @@ const renderModal = ({ url, likes, description }) => {
   bigPhotoModal.querySelector('.social__caption').textContent = description;
 };
 
+const onDocumentEscape = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeModal();
+  }
+};
+
 function showBigPhoto(photo) {
-  showModal(bigPhotoModal, closeModalButton);
+  openModal();
   renderModal(photo);
   renderComments(photo.comments);
 }
+
+function openModal() {
+  toggleModalClasses(bigPhotoModal, true);
+  document.addEventListener('keydown', onDocumentEscape);
+}
+
+function closeModal() {
+  toggleModalClasses(bigPhotoModal, false);
+  document.removeEventListener('keydown', onDocumentEscape);
+}
+
+const onCloseModalButtonClick = closeModal;
+closeModalButton.addEventListener('click', onCloseModalButtonClick);
+
 
 export { showBigPhoto };
