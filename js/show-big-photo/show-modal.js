@@ -1,6 +1,5 @@
-import { isEscapeKey } from './util.js';
+import { isEscapeKey } from '../util.js';
 import { renderComments } from './comments.js';
-
 
 const bigPhotoModal = document.querySelector('.big-picture');
 const closeModalButton = document.querySelector('.big-picture__cancel');
@@ -16,14 +15,12 @@ const toggleClasses = (willBeOpened = true) => {
   document.body.classList.toggle('modal-open', willBeOpened);
 };
 
-
 const onDocumentKeyDown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeModal();
   }
 };
-
 
 function openModal(photo) {
   toggleClasses(true);

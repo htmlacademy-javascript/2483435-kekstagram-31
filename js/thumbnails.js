@@ -1,5 +1,5 @@
-import { openModal } from './show-modal.js';
-import { getPhotoById } from './photo-state.js';
+import { openModal } from './show-big-photo/show-modal.js';
+import { getPhotoById } from './show-big-photo/photo-state.js';
 
 const template = document
   .querySelector('#picture')
@@ -22,15 +22,17 @@ const createThumbnail = (photo) => {
   return thumbnail;
 };
 
-
-const renderThumbnails = (photos) => container.append(...photos.map(createThumbnail));
+const renderThumbnails = (photos) =>
+  container.append(...photos.map(createThumbnail));
 
 container.addEventListener('click', (evt) => {
-  evt.preventDefault();
   const thumbnail = evt.target.closest('.picture');
-  const id = Number(thumbnail.dataset.id);
-  const photo = getPhotoById(id);
-  openModal(photo);
+  if (thumbnail) {
+    evt.preventDefault();
+    const id = Number(thumbnail.dataset.id);
+    const photo = getPhotoById(id);
+    openModal(photo);
+  }
 });
 
 export { renderThumbnails };
