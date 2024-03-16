@@ -13,7 +13,7 @@ const showModal = (modal, closeButton) => {
       evt.preventDefault();
       closeModal();
     }
-};
+  };
 
   function openModal() {
     toggleClasses(true);
