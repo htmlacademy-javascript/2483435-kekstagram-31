@@ -1,4 +1,4 @@
-import { openModal } from './show-big-photo/show-modal.js';
+import { showBigPhoto } from './show-big-photo/show-big-photo.js';
 import { getPhotoById } from './show-big-photo/photo-state.js';
 
 const template = document
@@ -31,7 +31,7 @@ container.addEventListener('click', (evt) => {
     evt.preventDefault();
     const id = Number(thumbnail.dataset.id);
     const photo = getPhotoById(id);
-    openModal(photo);
+    showBigPhoto (photo);
   }
 });
 

@@ -2,7 +2,7 @@ import {
   getRandomElement,
   getRandomInteger,
   createIdGenerator,
-} from '../util.js';
+} from '../utils/random-values.js';
 
 const AMOUNT_PHOTOS = 25;
 

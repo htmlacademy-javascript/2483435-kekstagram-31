@@ -1,12 +1,12 @@
-const loadingImageButton = document.querySelector('.img-upload__label  img-upload__control');
+import { showModal } from '../utils/modal-windows.js';
+
+
+// const loadingImageButton = document.querySelector('.img-upload__label  img-upload__control');
 const editingModal = document.querySelector('.img-upload__overlay');
-const loadingImageForm = document.querySelector('.img-upload__input');
+const loadingForm = document.querySelector('.img-upload__input');
+const closeModalButton = document.querySelector('.img-upload__cancel');
 
-
-loadingImageForm.addEventListener('change', (evt) => {
+loadingForm.addEventListener('change', (evt) => {
   evt.preventDefault();
-  console.log(1);
-  editingModal.classList.remove('hidden');
-  document.body.classList.add('modal-open');
+  showModal(editingModal, closeModalButton);
 });
-
