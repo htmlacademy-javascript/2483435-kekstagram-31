@@ -1,4 +1,5 @@
 import { isEscapeKey, toggleModalClasses } from '../utils/modal-windows.js';
+import { validate } from './form-validation.js';
 import './photo-editing.js';
 
 const form = document.querySelector('.img-upload__form');
@@ -24,3 +25,10 @@ form.addEventListener('reset', () => {
   toggleModalClasses(editingModal, false);
   document.removeEventListener('keydown', onDocumentEscape);
 });
+
+form.addEventListener('change', (evt) => {
+  evt.preventDefault();
+  validate();
+});
+
+export { form };
