@@ -1,8 +1,8 @@
 import { isUniqueArray } from '../utils/util.js';
 
 const form = document.querySelector('.img-upload__form');
-const hashtags = document.querySelector('.text__hashtags');
-const description = document.querySelector('.text__description');
+const hashtags = form.hashtags;
+const description = form.description;
 
 const Hashtags = {
   MAX_COUNT: 5,
@@ -72,9 +72,8 @@ const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextTag: 'div',
-  errorTextClass: 'img-upload__field-wrapper--error'
+  errorTextClass: 'img-upload__field-wrapper--error',
 });
-
 
 pristine.addValidator(hashtags, validateHashtags, () => errorMessage);
 
@@ -85,5 +84,6 @@ pristine.addValidator(
 );
 
 const validate = () => pristine.validate();
+const resetValidation = () => pristine.reset();
 
-export { validate };
+export { validate, resetValidation };
