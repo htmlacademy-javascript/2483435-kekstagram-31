@@ -1,3 +1,5 @@
+import './effects.js';
+
 const ScaleParameters = {
   MIN: 25,
   MAX: 100,
@@ -11,17 +13,16 @@ const zoomUpButton = form.querySelector('.scale__control--bigger');
 const scaleValue = form.scale;
 const previewImage = document.querySelector('.img-upload__preview img');
 
+let currentScale = parseInt(scaleValue.value, 10);
 
 const setScale = (value) => {
   const scaleField = value / ScaleParameters.PERCENT_COEFFICIENT;
   previewImage.style.transform = `scale(${scaleField})`;
   scaleValue.value = `${value}%`;
+  currentScale = value;
 };
 
-
 zoomDownButton.addEventListener('click', () => {
-  const currentScale = parseInt(scaleValue.value, 10);
-
   if (currentScale <= ScaleParameters.MIN) {
     return;
   }
@@ -29,16 +30,12 @@ zoomDownButton.addEventListener('click', () => {
   setScale(currentScale - ScaleParameters.STEP);
 });
 
-
 zoomUpButton.addEventListener('click', () => {
-  const currentScale = parseInt(scaleValue.value, 10);
-
   if (currentScale >= ScaleParameters.MAX) {
     return;
   }
 
   setScale(currentScale + ScaleParameters.STEP);
 });
-
 
 export const resetScale = () => previewImage.style.removeProperty('transform');
