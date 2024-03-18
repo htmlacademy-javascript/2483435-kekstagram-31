@@ -1,6 +1,5 @@
-import { isEscapeKey } from './util.js';
+import { isEscapeKey, toggleModalClasses } from '../utils/modal-windows.js';
 import { renderComments } from './comments.js';
-
 
 const bigPhotoModal = document.querySelector('.big-picture');
 const closeModalButton = document.querySelector('.big-picture__cancel');
@@ -11,33 +10,31 @@ const renderModal = ({ url, likes, description }) => {
   bigPhotoModal.querySelector('.social__caption').textContent = description;
 };
 
-const toggleClasses = (willBeOpened = true) => {
-  bigPhotoModal.classList.toggle('hidden', !willBeOpened);
-  document.body.classList.toggle('modal-open', willBeOpened);
-};
-
-
-const onDocumentKeyDown = (evt) => {
+const onDocumentEscape = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeModal();
   }
 };
 
-
-function openModal(photo) {
-  toggleClasses(true);
+function showBigPhoto(photo) {
+  openModal();
   renderModal(photo);
   renderComments(photo.comments);
-  document.addEventListener('keydown', onDocumentKeyDown);
+}
+
+function openModal() {
+  toggleModalClasses(bigPhotoModal, true);
+  document.addEventListener('keydown', onDocumentEscape);
 }
 
 function closeModal() {
-  toggleClasses(false);
-  document.removeEventListener('keydown', onDocumentKeyDown);
+  toggleModalClasses(bigPhotoModal, false);
+  document.removeEventListener('keydown', onDocumentEscape);
 }
 
 const onCloseModalButtonClick = closeModal;
 closeModalButton.addEventListener('click', onCloseModalButtonClick);
 
-export { openModal };
+
+export { showBigPhoto };

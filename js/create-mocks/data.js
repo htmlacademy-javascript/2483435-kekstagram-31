@@ -2,35 +2,34 @@ import {
   getRandomElement,
   getRandomInteger,
   createIdGenerator,
-} from './util.js';
+} from '../utils/random-values.js';
 
 const AMOUNT_PHOTOS = 25;
 
 const RangeIdOfPhotos = {
   MIN: 1,
-  MAX: 25
+  MAX: 25,
 };
 
 const RangeIdOfComments = {
   MIN: 1,
-  MAX: 1000
+  MAX: 1000,
 };
 
 const RangeNumberOfAvatar = {
   MIN: 1,
-  MAX: 6
+  MAX: 6,
 };
 
 const RangeNumberOfLikes = {
   MIN: 15,
-  MAX: 200
+  MAX: 200,
 };
 
 const RangeNumberOfComments = {
   MIN: 0,
-  MAX: 30
+  MAX: 30,
 };
-
 
 const PHOTO_DESCRIPTIONS = [
   'поле',
@@ -82,9 +81,16 @@ const USER_NAMES = [
   'Леопольд',
 ];
 
-
-const getPhotoId = createIdGenerator(RangeIdOfPhotos.MIN, RangeIdOfPhotos.MAX, true);
-const getCommentId = createIdGenerator(RangeIdOfComments.MIN, RangeIdOfComments.MAX, true);
+const getPhotoId = createIdGenerator(
+  RangeIdOfPhotos.MIN,
+  RangeIdOfPhotos.MAX,
+  true
+);
+const getCommentId = createIdGenerator(
+  RangeIdOfComments.MIN,
+  RangeIdOfComments.MAX,
+  true
+);
 
 const generateDescription = () => getRandomElement(PHOTO_DESCRIPTIONS);
 
@@ -95,7 +101,10 @@ const generateMessage = () =>
 
 const generateComments = () => ({
   id: getCommentId(),
-  avatar: `img/avatar-${getRandomInteger(RangeNumberOfAvatar.MIN, RangeNumberOfAvatar.MAX)}.svg`,
+  avatar: `img/avatar-${getRandomInteger(
+    RangeNumberOfAvatar.MIN,
+    RangeNumberOfAvatar.MAX
+  )}.svg`,
   message: generateMessage(),
   name: getRandomElement(USER_NAMES),
 });
@@ -108,7 +117,15 @@ const mockedPhoto = () => {
     url: `photos/${id}.jpg`,
     description: generateDescription(),
     likes: getRandomInteger(RangeNumberOfLikes.MIN, RangeNumberOfLikes.MAX),
-    comments: Array.from({ length: getRandomInteger(RangeNumberOfComments.MIN, RangeNumberOfComments.MAX) }, generateComments),
+    comments: Array.from(
+      {
+        length: getRandomInteger(
+          RangeNumberOfComments.MIN,
+          RangeNumberOfComments.MAX
+        ),
+      },
+      generateComments
+    ),
   };
 };
 
