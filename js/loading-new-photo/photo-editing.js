@@ -1,5 +1,3 @@
-import './effects.js';
-
 const ScaleParameters = {
   MIN: 25,
   MAX: 100,
@@ -12,6 +10,8 @@ const zoomDownButton = form.querySelector('.scale__control--smaller');
 const zoomUpButton = form.querySelector('.scale__control--bigger');
 const scaleValue = form.scale;
 const previewImage = document.querySelector('.img-upload__preview img');
+const slider = document.querySelector('.img-upload__effect-level');
+
 
 let currentScale = parseInt(scaleValue.value, 10);
 
@@ -37,5 +37,6 @@ zoomUpButton.addEventListener('click', () => {
 
   setScale(currentScale + ScaleParameters.STEP);
 });
+
 
 export const resetScale = () => previewImage.style.removeProperty('transform');
