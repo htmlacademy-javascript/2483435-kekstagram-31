@@ -10,7 +10,6 @@ const zoomDownButton = form.querySelector('.scale__control--smaller');
 const zoomUpButton = form.querySelector('.scale__control--bigger');
 const scaleValue = form.scale;
 const previewImage = document.querySelector('.img-upload__preview img');
-const slider = document.querySelector('.img-upload__effect-level');
 
 
 let currentScale = parseInt(scaleValue.value, 10);
