@@ -1,3 +1,4 @@
+import Pristine from 'pristinejs';
 import { isUniqueArray } from '../utils/util.js';
 
 const form = document.querySelector('.img-upload__form');
@@ -8,7 +9,7 @@ const Hashtags = {
   MAX_COUNT: 5,
   MAX_COUNT_ERROR: 'Максимальное количество хэштегов 5',
   FIRST_SYMBOL_ERROR: 'Хэштег должен начинаться с символа #',
-  ALLOWED_SYMBOLS: /^#[a-zа-яё0-9]{1,19}/,
+  ALLOWED_SYMBOLS: /^#[a-zа-яё0-9]{1,19}$/,
   SYMBOLS_ERROR: 'Хэштег должен состоять только из букв и чисел',
   MIN_LENGTH: 2,
   MIN_LENGTH_ERROR: 'Хэштег не может состоять только из #',

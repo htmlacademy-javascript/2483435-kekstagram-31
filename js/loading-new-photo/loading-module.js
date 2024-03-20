@@ -1,7 +1,8 @@
-import { resetScale} from './photo-editing.js';
+import { resetScale } from './photo-editing.js';
 import { isEscapeKey, toggleModalClasses } from '../utils/modal-windows.js';
 import { validate, resetValidation } from './form-validation.js';
 import './photo-editing.js';
+import { resetSlider } from './effects.js';
 
 const form = document.querySelector('.img-upload__form');
 const filename = form.filename;
@@ -30,6 +31,7 @@ form.addEventListener('reset', () => {
   document.removeEventListener('keydown', onDocumentEscape);
   resetValidation();
   resetScale();
+  resetSlider();
 });
 
 form.addEventListener('submit', (evt) => {
