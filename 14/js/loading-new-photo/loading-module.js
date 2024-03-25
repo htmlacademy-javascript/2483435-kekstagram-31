@@ -18,7 +18,6 @@ const templateSuccess = document.querySelector('#success').content;
 const templateError = document.querySelector('#error').content;
 const body = document.body;
 
-
 const closeModal = () => form.reset();
 
 const isFocusText = () =>
@@ -27,7 +26,6 @@ const isFocusText = () =>
 const onDocumentEscape = (evt) => {
   if (isEscapeKey(evt) && !isFocusText()) {
     evt.preventDefault();
-    evt.stopPropagation();
     closeModal();
   }
 };
@@ -48,6 +46,40 @@ filename.addEventListener('change', (evt) => {
   document.addEventListener('keydown', onDocumentEscape);
 });
 
+
+const closeSuccessAlarm = (evt) => {
+
+  const area = body.querySelector('.success__inner');
+  const text = body.querySelector('.success__title');
+  const background = body.querySelector('.success');
+
+  if (evt.target !== text && evt.target !== area || isEscapeKey(evt)) {
+    background.remove();
+    clearListener();
+  }
+};
+
+const closeFailAlarm = (evt) => {
+
+  const area = body.querySelector('.error__inner');
+  const text = body.querySelector('.error__title');
+  const background = body.querySelector('.error');
+
+  if (evt.target !== text && evt.target !== area || isEscapeKey(evt)) {
+    evt.stopPropagation();
+    background.remove();
+    clearListener();
+  }
+};
+
+function clearListener () {
+  body.removeEventListener('click', closeSuccessAlarm);
+  body.removeEventListener('keydown', closeSuccessAlarm);
+  body.removeEventListener('click', closeFailAlarm);
+  body.removeEventListener('keydown', closeFailAlarm);
+}
+
+
 form.addEventListener('reset', () => {
   toggleModalClasses(editingModal, false);
   document.removeEventListener('keydown', onDocumentEscape);
@@ -56,67 +88,42 @@ form.addEventListener('reset', () => {
   resetSlider();
 });
 
+
 const successfulFormSubmission = () => {
+  closeModal();
 
   const successNotification = templateSuccess.cloneNode(true);
   body.append(successNotification);
 
-  const successNotificationBackground = body.querySelector('.success');
-  const successNotificationArea = body.querySelector('.success__inner');
-  const successNotificationText = body.querySelector('.success__title');
+  body.addEventListener('click', closeSuccessAlarm);
 
-  document.addEventListener('click', (evt) => {
-    if (evt.target !== successNotificationText && evt.target !== successNotificationArea) {
-      successNotificationBackground.remove();
-    }
-  });
-
-  document.addEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)){
-      successNotificationBackground.remove();
-    }
-  });
+  body.addEventListener('keydown', closeSuccessAlarm);
 };
 
 
 const failFormSubmission = () => {
-
   const failNotification = templateError.cloneNode(true);
   body.append(failNotification);
 
-  const failNotificationBackground = body.querySelector('.error');
-  const failNotificationArea = body.querySelector('.error__inner');
-  const failNotificationText = body.querySelector('.error__title');
+  body.addEventListener('click', closeFailAlarm);
 
-  body.addEventListener('click', (evt) => {
-    if (evt.target !== failNotificationText && evt.target !== failNotificationArea) {
-      failNotificationBackground.remove();
-    }
-  });
-
-  body.addEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)){
-      evt.stopPropagation();
-      failNotificationBackground.remove();
-    }
-  }, {capture: true});
+  body.addEventListener('keydown', closeFailAlarm);
 };
 
 
-const setUserFormSumbit = (onSuccess) => {
+const setUserFormSumbit = () => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = validate();
     if (isValid) {
       blockSubmitButton();
       sendData(new FormData(evt.target))
-        .then(onSuccess,
-          closeModal(),
-          successfulFormSubmission())
+        .then(() => successfulFormSubmission())
         .catch(() => failFormSubmission())
         .finally(unblockSubmitButton);
     }
   });
 };
 
-export { setUserFormSumbit, closeModal };
+
+export { setUserFormSumbit };
