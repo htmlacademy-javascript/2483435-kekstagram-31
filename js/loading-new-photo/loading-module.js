@@ -30,30 +30,6 @@ const onDocumentEscape = (evt) => {
   }
 };
 
-const closeSuccessAlarm = (evt) => {
-  const area = document.querySelector('.success__inner');
-  const text = document.querySelector('.success__title');
-
-  if ((evt.target !== area && evt.target !== text) || isEscapeKey(evt)) {
-    const background = document.querySelector('.success');
-    background.remove();
-
-    closeModal();
-  }
-};
-
-const closeFailAlarm = (evt) => {
-  const area = document.querySelector('.error__inner');
-  const text = document.querySelector('.error__title');
-
-  if ((evt.target !== area && evt.target !== text) || isEscapeKey(evt)) {
-    const background = document.querySelector('.error');
-    if (background) {
-      background.remove();
-    }
-  }
-};
-
 const blockSubmitButton = () => {
   formSubmitButton.disabled = true;
   formSubmitButton.textContent = SubmitButtonText.SENDING;
@@ -70,49 +46,84 @@ filename.addEventListener('change', (evt) => {
   document.addEventListener('keydown', onDocumentEscape);
 });
 
+
+const closeSuccessAlarm = (evt) => {
+
+  const area = body.querySelector('.success__inner');
+  const text = body.querySelector('.success__title');
+  const background = body.querySelector('.success');
+
+  if (evt.target !== text && evt.target !== area || isEscapeKey(evt)) {
+    background.remove();
+    clearListener();
+  }
+};
+
+const closeFailAlarm = (evt) => {
+
+  const area = body.querySelector('.error__inner');
+  const text = body.querySelector('.error__title');
+  const background = body.querySelector('.error');
+
+  if (evt.target !== text && evt.target !== area || isEscapeKey(evt)) {
+    evt.stopPropagation();
+    background.remove();
+    clearListener();
+  }
+};
+
+function clearListener () {
+  body.removeEventListener('click', closeSuccessAlarm);
+  body.removeEventListener('keydown', closeSuccessAlarm);
+  body.removeEventListener('click', closeFailAlarm);
+  body.removeEventListener('keydown', closeFailAlarm);
+}
+
+
 form.addEventListener('reset', () => {
   toggleModalClasses(editingModal, false);
   document.removeEventListener('keydown', onDocumentEscape);
-  document.removeEventListener('keydown', closeSuccessAlarm);
-  document.removeEventListener('click', closeSuccessAlarm);
-  document.removeEventListener('keydown', closeFailAlarm);
-  document.removeEventListener('click', closeFailAlarm);
   resetValidation();
   resetScale();
   resetSlider();
 });
 
+
 const successfulFormSubmission = () => {
   closeModal();
+
   const successNotification = templateSuccess.cloneNode(true);
   body.append(successNotification);
 
-  document.addEventListener('click', closeSuccessAlarm);
+  body.addEventListener('click', closeSuccessAlarm);
 
-  document.addEventListener('keydown', closeSuccessAlarm);
+  body.addEventListener('keydown', closeSuccessAlarm);
 };
+
 
 const failFormSubmission = () => {
   const failNotification = templateError.cloneNode(true);
   body.append(failNotification);
 
-  document.addEventListener('click', closeFailAlarm);
+  body.addEventListener('click', closeFailAlarm);
 
-  document.addEventListener('keydown', closeFailAlarm, { capture: true });
+  body.addEventListener('keydown', closeFailAlarm);
 };
+
 
 const setUserFormSumbit = () => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    const isValide = validate();
-    if (isValide) {
+    const isValid = validate();
+    if (isValid) {
       blockSubmitButton();
       sendData(new FormData(evt.target))
-        .then(successfulFormSubmission)
-        .catch(failFormSubmission)
+        .then(() => successfulFormSubmission())
+        .catch(() => failFormSubmission())
         .finally(unblockSubmitButton);
     }
   });
 };
 
-export { setUserFormSumbit, closeModal };
+
+export { setUserFormSumbit };
