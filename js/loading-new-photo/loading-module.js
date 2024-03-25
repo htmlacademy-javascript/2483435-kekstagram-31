@@ -1,6 +1,6 @@
 import { resetScale } from './photo-editing.js';
 import { isEscapeKey, toggleModalClasses } from '../utils/modal-windows.js';
-import { resetValidation } from './form-validation.js';
+import { validate, resetValidation } from './form-validation.js';
 import './photo-editing.js';
 import { resetSlider } from './effects.js';
 import { sendData } from '../utils/api.js';
@@ -26,26 +26,31 @@ const isFocusText = () =>
 const onDocumentEscape = (evt) => {
   if (isEscapeKey(evt) && !isFocusText()) {
     evt.preventDefault();
-    evt.stopPropagation();
-    // closeModal();
+    closeModal();
   }
 };
 
-const closeAlarm = (evt, isSuccess) => {
-  const area = body.querySelector(`.${isSuccess}__inner`);
-  const text = body.querySelector(`.${isSuccess}__title`);
+const closeSuccessAlarm = (evt) => {
+  const area = document.querySelector('.success__inner');
+  const text = document.querySelector('.success__title');
 
-  if (
-    (evt.target !== area &&
-      evt.target !== text) ||
-    isEscapeKey(evt)
-  ) {
-    body.lastElementChild.remove();
+  if ((evt.target !== area && evt.target !== text) || isEscapeKey(evt)) {
+    const background = document.querySelector('.success');
+    background.remove();
 
-    if (isSuccess === 'success') {
-      closeModal();
+    closeModal();
+  }
+};
+
+const closeFailAlarm = (evt) => {
+  const area = document.querySelector('.error__inner');
+  const text = document.querySelector('.error__title');
+
+  if ((evt.target !== area && evt.target !== text) || isEscapeKey(evt)) {
+    const background = document.querySelector('.error');
+    if (background) {
+      background.remove();
     }
-
   }
 };
 
@@ -68,48 +73,45 @@ filename.addEventListener('change', (evt) => {
 form.addEventListener('reset', () => {
   toggleModalClasses(editingModal, false);
   document.removeEventListener('keydown', onDocumentEscape);
-  document.removeEventListener('keydown', closeAlarm);
-  document.removeEventListener('click', closeAlarm);
+  document.removeEventListener('keydown', closeSuccessAlarm);
+  document.removeEventListener('click', closeSuccessAlarm);
+  document.removeEventListener('keydown', closeFailAlarm);
+  document.removeEventListener('click', closeFailAlarm);
   resetValidation();
   resetScale();
   resetSlider();
 });
-
 
 const successfulFormSubmission = () => {
   closeModal();
   const successNotification = templateSuccess.cloneNode(true);
   body.append(successNotification);
 
-  document.addEventListener('click', closeAlarm('success'));
+  document.addEventListener('click', closeSuccessAlarm);
 
-  document.addEventListener('keydown', closeAlarm('success'));
+  document.addEventListener('keydown', closeSuccessAlarm);
 };
-
 
 const failFormSubmission = () => {
   const failNotification = templateError.cloneNode(true);
   body.append(failNotification);
 
+  document.addEventListener('click', closeFailAlarm);
 
-  const failNotificationArea = body.querySelector('.error__inner');
-  const failNotificationText = body.querySelector('.error__title');
-
-  body.addEventListener('click', );
-
-  body.addEventListener('keydown', { capture: true });
+  document.addEventListener('keydown', closeFailAlarm, { capture: true });
 };
-
 
 const setUserFormSumbit = () => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
-
-    blockSubmitButton();
-    sendData(new FormData(evt.target))
-      .then(successfulFormSubmission)
-      // .catch(failFormSubmission)
-      .finally(unblockSubmitButton);
+    const isValide = validate();
+    if (isValide) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(successfulFormSubmission)
+        .catch(failFormSubmission)
+        .finally(unblockSubmitButton);
+    }
   });
 };
 
