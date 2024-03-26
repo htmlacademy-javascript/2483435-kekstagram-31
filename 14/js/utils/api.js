@@ -10,16 +10,18 @@ const Method = {
   POST: 'POST',
 };
 
-const load = (route, method = Method.GET, body = null) =>
-  fetch(`${BASE_URL}${route}`, { method, body }).then((response) => {
-    if (!response.ok) {
-      throw new Error();
-    }
-    return response.json();
-  });
+const load = async (route, method = Method.GET, body = null) => {
+  const response = await fetch(`${BASE_URL}${route}`, { method, body });
 
-const getData = () => load(Route.GET_DATA);
+  if (!response.ok) {
+    throw new Error();
+  }
 
-const sendData = (body) => load(Route.SEND_DATA, Method.POST, body);
+  return await response.json();
+};
 
-export { getData, sendData };
+const getPhotos = () => load(Route.GET_DATA);
+
+const uploadNewPhoto = (body) => load(Route.SEND_DATA, Method.POST, body);
+
+export { getPhotos, uploadNewPhoto };

@@ -1,22 +1,20 @@
-const ALERT_SHOW_TIME = 5000;
 
-const body = document.body;
-const errorLoadDataTemplate = document.querySelector('#data-error').content;
+const getTemplate = (id) => {
+  const template = document.getElementById(id);
 
+  if (!template) {
+    throw new Error('Is not found');
+  }
 
-const errorLoadData = () => {
-  const errorArea = errorLoadDataTemplate.cloneNode(true);
-  body.append(errorArea);
+  if (!(template instanceof HTMLTemplateElement)) {
+    throw new Error(`${id} is not template element`);
+  }
 
-  const errorLoadDataArea = body.querySelector('.data-error');
-
-  setTimeout(() => {
-    errorLoadDataArea.remove();
-  }, ALERT_SHOW_TIME);
+  return template.content.firstElementChild;
 };
 
 
-export const isUniqueArray = (array) => new Set(array).size === array.length;
+const isUniqueArray = (array) => new Set(array).size === array.length;
 
 
-export { errorLoadData };
+export { isUniqueArray, getTemplate };
