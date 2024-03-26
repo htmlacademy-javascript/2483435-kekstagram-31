@@ -5,5 +5,4 @@ const toggleModalClasses = (wrapper, willBeOpened = true) => {
   document.body.classList.toggle('modal-open', willBeOpened);
 };
 
-
 export { isEscapeKey, toggleModalClasses };

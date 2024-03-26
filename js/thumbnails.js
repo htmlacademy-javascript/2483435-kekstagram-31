@@ -1,9 +1,8 @@
 import { showBigPhoto } from './show-big-photo/show-big-photo.js';
 import { getPhotoById } from './show-big-photo/photo-state.js';
+import { getTemplate } from './utils/util.js';
 
-const template = document
-  .querySelector('#picture')
-  .content.querySelector('.picture');
+const template = getTemplate('picture');
 const container = document.querySelector('.pictures');
 
 const createThumbnail = (photo) => {
