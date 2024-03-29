@@ -1,4 +1,3 @@
-
 const getTemplate = (id) => {
   const template = document.getElementById(id);
 
@@ -13,8 +12,14 @@ const getTemplate = (id) => {
   return template.content.firstElementChild;
 };
 
-
 const isUniqueArray = (array) => new Set(array).size === array.length;
 
+function debounce(callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
 
-export { isUniqueArray, getTemplate };
+export { isUniqueArray, getTemplate, debounce };

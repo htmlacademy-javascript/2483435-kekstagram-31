@@ -13,8 +13,6 @@ const handleSelectFilters = (photos) => {
 
   filterItems.addEventListener('click', (evt) => {
 
-    clearThumbnails();
-
     const activeFilter = filtersForm.querySelector(
       '.img-filters__button--active'
     );
@@ -38,6 +36,7 @@ const handleSelectFilters = (photos) => {
     }
 
     const filteredPhotos = sortedPhotos();
+    clearThumbnails();
     renderThumbnails(filteredPhotos);
   });
 };

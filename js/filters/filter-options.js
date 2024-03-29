@@ -11,7 +11,20 @@ const RandomFilterParamters = {
   MAX: 10,
 };
 
-const defaultFilter = (photos) => photos;
+const defaultFilter = (photos) => {
+  const newPhotos = photos;
+
+  const getIdPhoto = (photo) => photo.id;
+
+  const iDSort = (photoA, photoB) => {
+    const photoIdA = getIdPhoto(photoA);
+    const photoIdB = getIdPhoto(photoB);
+
+    return photoIdA - photoIdB;
+  };
+
+  return newPhotos.sort(iDSort);
+};
 
 const randomFilter = (photos) => {
   const newPhotos = photos;
