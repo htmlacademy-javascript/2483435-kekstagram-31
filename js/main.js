@@ -5,6 +5,7 @@ import { getPhotos } from './utils/api.js';
 import { errorLoadData } from './loading-new-photo/error-load-photos.js';
 import { handleSelectFilters } from './filters/filters.js';
 
+
 getPhotos()
   .then((photos) => {
     savePhotos(photos);
