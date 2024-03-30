@@ -4,7 +4,6 @@ import './loading-new-photo/loading-module.js';
 import { getPhotos } from './utils/api.js';
 import { errorLoadData } from './loading-new-photo/error-load-photos.js';
 import { handleSelectFilters } from './filters/filters.js';
-import './loading-new-photo/load-new-photo.js';
 
 
 getPhotos()
