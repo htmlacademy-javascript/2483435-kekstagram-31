@@ -1,4 +1,4 @@
-import { getRandomInteger } from '../utils/random-values.js';
+import { sortRandom } from '../utils/random-values.js';
 
 const Filters = {
   DEFAULT_FILTER: 'filter-default',
@@ -6,52 +6,30 @@ const Filters = {
   DISCUSSED_FILTER: 'filter-discussed',
 };
 
-const RandomFilterParamters = {
+const RandomFilterParams = {
   MIN: 0,
   MAX: 10,
 };
 
-const defaultFilter = (photos) => {
-  const newPhotos = photos;
+const filterRandom = (photos) =>
+  photos
+    .toSorted(sortRandom)
+    .slice(RandomFilterParams.MIN, RandomFilterParams.MAX);
 
-  const getIdPhoto = (photo) => photo.id;
+const getCommentsAmount = (photo) => photo.comments.length;
 
-  const iDSort = (photoA, photoB) => {
-    const photoIdA = getIdPhoto(photoA);
-    const photoIdB = getIdPhoto(photoB);
+const discussedSort = (photoA, photoB) => {
+  const commentsA = getCommentsAmount(photoA);
+  const commentsB = getCommentsAmount(photoB);
 
-    return photoIdA - photoIdB;
-  };
-
-  return newPhotos.sort(iDSort);
+  return commentsB - commentsA;
 };
 
-const randomFilter = (photos) => {
-  const newPhotos = photos;
-  const min = 0;
+const sortDiscussed = (photos) => photos.toSorted(discussedSort);
 
-  for (let i = newPhotos.length - 1; i > 0; i--) {
-    const max = i + 1;
-    const j = getRandomInteger(min, max);
-    [newPhotos[i], newPhotos[j]] = [newPhotos[j], newPhotos[i]];
-  }
-
-  return newPhotos.slice(RandomFilterParamters.MIN, RandomFilterParamters.MAX);
+const idToFilter = {
+  [Filters.RANDOM_FILTER]: filterRandom,
+  [Filters.DISCUSSED_FILTER]: sortDiscussed,
 };
 
-const discussedFilter = (photos) => {
-  const newPhotos = photos;
-
-  const getCommentsAmount = (photo) => photo.comments.length;
-
-  const discussedSort = (photoA, photoB) => {
-    const commentsA = getCommentsAmount(photoA);
-    const commentsB = getCommentsAmount(photoB);
-
-    return commentsB - commentsA;
-  };
-
-  return newPhotos.sort(discussedSort);
-};
-
-export { Filters, defaultFilter, randomFilter, discussedFilter };
+export { idToFilter };
