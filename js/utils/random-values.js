@@ -25,5 +25,7 @@ const createIdGenerator = (min, max, uniqueness = false) => {
   };
 };
 
+const sortRandom = () => getRandomInteger(-1,1);
 
-export { getRandomInteger, getRandomElement, createIdGenerator };
+
+export { getRandomInteger, getRandomElement, createIdGenerator, sortRandom };
