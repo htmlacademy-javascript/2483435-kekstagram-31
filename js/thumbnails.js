@@ -34,4 +34,15 @@ container.addEventListener('click', (evt) => {
   }
 });
 
-export { renderThumbnails };
+const clearThumbnails = () => {
+
+  Array.prototype.slice
+    .call(container.getElementsByTagName('a'))
+    .forEach((item) => {
+      item.remove();
+    });
+
+};
+
+
+export { renderThumbnails, clearThumbnails };
