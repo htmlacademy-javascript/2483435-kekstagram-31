@@ -1,10 +1,6 @@
 import Pristine from 'pristinejs';
 import { isUniqueArray } from '../utils/util.js';
 
-const form = document.querySelector('.img-upload__form');
-const hashtags = form.hashtags;
-const description = form.description;
-
 const Hashtags = {
   MAX_COUNT: 5,
   MAX_COUNT_ERROR: 'Максимальное количество хэштегов 5',
@@ -21,6 +17,10 @@ const Hashtags = {
 const Description = {
   MAX_LENGTH: 140,
 };
+
+const form = document.querySelector('.img-upload__form');
+const hashtags = form.hashtags;
+const description = form.description;
 
 let errorMessage = '';
 
@@ -86,6 +86,5 @@ pristine.addValidator(
 
 const validate = () => pristine.validate();
 const resetValidation = () => pristine.reset();
-
 
 export { validate, resetValidation };

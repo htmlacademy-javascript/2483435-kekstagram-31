@@ -1,11 +1,11 @@
 import { getTemplate } from '../utils/util.js';
 
-const ALERT_SHOW_TIME = 5000;
+const ALERT_SHOW_TIME = 5_000;
 
 const body = document.body;
 const errorLoadDataTemplate = getTemplate('data-error');
 
-const errorLoadData = () => {
+const errorLoadPhotos = () => {
   const errorArea = errorLoadDataTemplate.cloneNode(true);
   body.append(errorArea);
 
@@ -14,4 +14,4 @@ const errorLoadData = () => {
   }, ALERT_SHOW_TIME);
 };
 
-export {errorLoadData };
+export { errorLoadPhotos };

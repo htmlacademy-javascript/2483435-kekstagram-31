@@ -1,13 +1,16 @@
-const shownCountComments = document.querySelector('.social__comment-shown-count');
-const totalCountComments = document.querySelector('.social__comment-total-count');
+const PACK_SIZE = 5;
+
+const shownCountComments = document.querySelector(
+  '.social__comment-shown-count'
+);
+const totalCountComments = document.querySelector(
+  '.social__comment-total-count'
+);
 const commentsList = document.querySelector('.social__comments');
 const commentsListItem = commentsList.querySelector('.social__comment');
 const commentsLoaderButton = document.querySelector('.comments-loader');
 
-const PACK_SIZE = 5;
-
 let currentComments = [];
-
 
 const createComment = (comment) => {
   const item = commentsListItem.cloneNode(true);
@@ -28,11 +31,9 @@ const onCommentsLoaderButtonClick = () => {
   endOfSlice = isAllCommentsShown ? currentComments.length : endOfSlice;
 
   const commentsSlice = currentComments.slice(shownComments, endOfSlice);
-
   commentsList.append(...commentsSlice.map(createComment));
 
   shownCountComments.textContent = endOfSlice;
-
   commentsLoaderButton.classList.toggle('hidden', isAllCommentsShown);
 };
 

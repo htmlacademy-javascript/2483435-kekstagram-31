@@ -12,7 +12,6 @@ const sliderFieldset = form.querySelector('.img-upload__effect-level');
 const sliderElement = form.querySelector('.effect-level__slider');
 const previewImage = document.querySelector('.img-upload__preview img');
 
-
 const filterParameters = {
   none: {
     slider: FROM_ZERO_TO_HUNDRED,
@@ -63,7 +62,6 @@ const customSlider = noUiSlider.create(sliderElement, {
 sliderFieldset.classList.add('hidden');
 
 customSlider.on('update', () => {
-
   const value = Number(customSlider.get());
   const currentFilter = form.effect.value;
   const filter = filterParameters[currentFilter].filter;
@@ -85,7 +83,6 @@ effectsList.addEventListener('change', () => {
 
   const nextOptions = filterParameters[filterName].slider;
   customSlider.updateOptions(nextOptions);
-
 });
 
 const resetSlider = () => {

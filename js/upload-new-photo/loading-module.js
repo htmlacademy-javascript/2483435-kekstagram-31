@@ -5,6 +5,7 @@ import './photo-editing.js';
 import { resetSlider } from './effects.js';
 import { uploadNewPhoto } from '../utils/api.js';
 import { blockSubmitButton, unblockSubmitButton } from './submit-state.js';
+import { parsePhoto } from './upload-new-photo.js';
 import {
   successfulFormSubmission,
   failFormSubmission,
@@ -28,6 +29,7 @@ const onDocumentEscape = (evt) => {
 
 filename.addEventListener('change', (evt) => {
   evt.preventDefault();
+  parsePhoto(filename.files[0]);
   toggleModalClasses(editingModal, true);
   document.addEventListener('keydown', onDocumentEscape);
 });

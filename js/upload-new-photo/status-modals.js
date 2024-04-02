@@ -17,13 +17,13 @@ const createNotification = (template, captureEscape = false) => {
   };
 
   function handleModalClick(evt) {
-    if(evt.target === button || evt.target === modal) {
+    if (evt.target === button || evt.target === modal) {
       close();
     }
   }
 
   function handleDocumentKey(evt) {
-    if(isEscapeKey(evt)) {
+    if (isEscapeKey(evt)) {
       evt.stopPropagation();
       evt.preventDefault();
       close();
@@ -37,4 +37,4 @@ const createNotification = (template, captureEscape = false) => {
 const successfulFormSubmission = () => createNotification(templateSuccess);
 const failFormSubmission = () => createNotification(templateError, true);
 
-export { successfulFormSubmission,failFormSubmission };
+export { successfulFormSubmission, failFormSubmission };
