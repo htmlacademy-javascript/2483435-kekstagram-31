@@ -11,7 +11,6 @@ const zoomUpButton = form.querySelector('.scale__control--bigger');
 const scaleValue = form.scale;
 const previewImage = document.querySelector('.img-upload__preview img');
 
-
 let currentScale = parseInt(scaleValue.value, 10);
 
 const setScale = (value) => {
@@ -36,6 +35,5 @@ zoomUpButton.addEventListener('click', () => {
 
   setScale(currentScale + ScaleParameters.STEP);
 });
-
 
 export const resetScale = () => previewImage.style.removeProperty('transform');

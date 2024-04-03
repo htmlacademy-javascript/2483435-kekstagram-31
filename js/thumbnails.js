@@ -12,7 +12,7 @@ const createThumbnail = (photo) => {
   image.src = photo.url;
   image.alt = photo.description;
 
-  thumbnail.href = `${photo.id}`;
+  thumbnail.href = photo.url;
   thumbnail.dataset.id = photo.id;
   thumbnail.querySelector('.picture__likes').textContent = photo.likes;
   thumbnail.querySelector('.picture__comments').textContent =
@@ -30,19 +30,11 @@ container.addEventListener('click', (evt) => {
     evt.preventDefault();
     const id = Number(thumbnail.dataset.id);
     const photo = getPhotoById(id);
-    showBigPhoto (photo);
+    showBigPhoto(photo);
   }
 });
 
-const clearThumbnails = () => {
-
-  Array.prototype.slice
-    .call(container.getElementsByTagName('a'))
-    .forEach((item) => {
-      item.remove();
-    });
-
-};
-
+const clearThumbnails = () =>
+  container.querySelectorAll('.picture').forEach((item) => item.remove());
 
 export { renderThumbnails, clearThumbnails };
