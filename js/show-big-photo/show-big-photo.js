@@ -12,15 +12,15 @@ const renderModal = ({ url, likes, description }) => {
 
 const openModal = () => {
   toggleModalClasses(bigPhotoModal, true);
-  document.addEventListener('keydown', onDocumentEscape);
+  document.addEventListener('keydown', onDocumentPressEscape);
 };
 
 const closeModal = () => {
   toggleModalClasses(bigPhotoModal, false);
-  document.removeEventListener('keydown', onDocumentEscape);
+  document.removeEventListener('keydown', onDocumentPressEscape);
 };
 
-function onDocumentEscape(evt) {
+function onDocumentPressEscape(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeModal();

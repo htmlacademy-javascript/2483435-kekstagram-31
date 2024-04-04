@@ -12,7 +12,7 @@ const getTemplate = (id) => {
   return template.content.firstElementChild;
 };
 
-const isUniqueArray = (array) => new Set(array).size === array.length;
+const isUniqueArray = (items) => new Set(items).size === items.length;
 
 function debounce(callback, timeoutDelay = 500) {
   let timeoutId;

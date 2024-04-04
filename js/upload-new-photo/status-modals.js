@@ -11,18 +11,18 @@ const createNotification = (template, captureEscape = false) => {
   const button = modal.querySelector(`.${modal.className}__button`);
 
   const close = () => {
-    modal.removeEventListener('click', handleModalClick);
-    document.removeEventListener('keydown', handleDocumentKey, captureEscape);
+    modal.removeEventListener('click', onModalClick);
+    document.removeEventListener('keydown', onDocumentPressEscape, captureEscape);
     modal.remove();
   };
 
-  function handleModalClick(evt) {
+  function onModalClick(evt) {
     if (evt.target === button || evt.target === modal) {
       close();
     }
   }
 
-  function handleDocumentKey(evt) {
+  function onDocumentPressEscape(evt) {
     if (isEscapeKey(evt)) {
       evt.stopPropagation();
       evt.preventDefault();
@@ -30,11 +30,11 @@ const createNotification = (template, captureEscape = false) => {
     }
   }
 
-  modal.addEventListener('click', handleModalClick);
-  document.addEventListener('keydown', handleDocumentKey, captureEscape);
+  modal.addEventListener('click', onModalClick);
+  document.addEventListener('keydown', onDocumentPressEscape, captureEscape);
 };
 
-const successfulFormSubmission = () => createNotification(templateSuccess);
-const failFormSubmission = () => createNotification(templateError, true);
+const showSuccessfullSubmission = () => createNotification(templateSuccess);
+const showFailSubmission = () => createNotification(templateError, true);
 
-export { successfulFormSubmission, failFormSubmission };
+export { showSuccessfullSubmission, showFailSubmission };

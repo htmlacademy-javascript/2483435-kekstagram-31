@@ -18,14 +18,14 @@ const filterRandom = (photos) =>
 
 const getCommentsAmount = (photo) => photo.comments.length;
 
-const discussedSort = (photoA, photoB) => {
+const sortByComments = (photoA, photoB) => {
   const commentsA = getCommentsAmount(photoA);
   const commentsB = getCommentsAmount(photoB);
 
   return commentsB - commentsA;
 };
 
-const sortDiscussed = (photos) => photos.toSorted(discussedSort);
+const sortDiscussed = (photos) => photos.toSorted(sortByComments);
 
 const idToFilter = {
   [Filters.RANDOM_FILTER]: filterRandom,

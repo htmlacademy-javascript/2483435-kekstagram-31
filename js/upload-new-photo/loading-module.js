@@ -7,8 +7,8 @@ import { uploadNewPhoto } from '../utils/api.js';
 import { blockSubmitButton, unblockSubmitButton } from './submit-state.js';
 import { parsePhoto } from './upload-new-photo.js';
 import {
-  successfulFormSubmission,
-  failFormSubmission,
+  showSuccessfullSubmission,
+  showFailSubmission,
 } from './status-modals.js';
 
 const form = document.querySelector('.img-upload__form');
@@ -20,7 +20,7 @@ const closeModal = () => form.reset();
 const isFocusText = () =>
   [form.hashtags, form.description].includes(document.activeElement);
 
-const onDocumentEscape = (evt) => {
+const onDocumentPressEscape = (evt) => {
   if (isEscapeKey(evt) && !isFocusText()) {
     evt.preventDefault();
     closeModal();
@@ -31,12 +31,12 @@ filename.addEventListener('change', (evt) => {
   evt.preventDefault();
   parsePhoto(filename.files[0]);
   toggleModalClasses(editingModal, true);
-  document.addEventListener('keydown', onDocumentEscape);
+  document.addEventListener('keydown', onDocumentPressEscape);
 });
 
 form.addEventListener('reset', () => {
   toggleModalClasses(editingModal, false);
-  document.removeEventListener('keydown', onDocumentEscape);
+  document.removeEventListener('keydown', onDocumentPressEscape);
   resetValidation();
   resetScale();
   resetSlider();
@@ -49,10 +49,10 @@ form.addEventListener('submit', (evt) => {
     blockSubmitButton();
     uploadNewPhoto(new FormData(evt.target))
       .then(() => {
-        successfulFormSubmission();
+        showSuccessfullSubmission();
         closeModal();
       })
-      .catch(failFormSubmission)
+      .catch(showFailSubmission)
       .finally(unblockSubmitButton);
   }
 });
