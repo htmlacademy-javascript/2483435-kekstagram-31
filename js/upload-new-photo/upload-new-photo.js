@@ -5,10 +5,12 @@ const photoPreviewEffects = document.querySelectorAll('.effects__preview');
 
 const updatePhoto = (file) => {
   const url = URL.createObjectURL(file);
+  const filtersBackground = `url(${url})`;
+
   photoPreview.src = url;
-  photoPreviewEffects.forEach(
-    (it) => (it.style.backgroundImage = `url(${url})`)
-  );
+  photoPreviewEffects.forEach((it) => {
+    it.style.backgroundImage = filtersBackground;
+  });
 };
 
 const validateExt = (fileName) => {
